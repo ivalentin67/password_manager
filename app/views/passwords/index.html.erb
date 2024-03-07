@@ -1,0 +1,9 @@
+<h1> Password manager </h1>
+<%= link_to "new Password", new_password_path %>
+
+<% if @passwords.count > 0 %>
+  <%= render @passwords %>
+  <% end %>
+<%# @passwords.each do |password| %>
+  <%#= password.url %>
+<%# end %>

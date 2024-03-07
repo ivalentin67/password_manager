@@ -1,0 +1,17 @@
+Créer une nouvelle application
+
+rails new -d mysql --css tailwind password_manager
+
+Installer devise
+
+Créer database + lier :
+- Remplacer le fichier database.yml dans config par celui envoyé par Sebastien (voir autres projets)
+- Modifier password + nom à côté de database (mettre nom du dossier) (+ changer d'autres infos si nécessaires)
+Optionnel
+- gem install mysql2 + bundle install
+
+Genérer des clés aléatoires :
+rails db:encryption:init
+
+# d142d561dc9982799ee7f2edef57ed06
+Au cas où
