@@ -12,4 +12,15 @@ class Password < ApplicationRecord
   def shareable_users
     User.excluding(user)
   end
+
+  def editable_by?(user)
+    user_passwords.find_by(user: user)&.editable?
+    end
+  def shareable_by?(user)
+    user_passwords.find_by(user: user)&.shareable?
+    end
+
+  def deletable_by?(user)
+    user_passwords.find_by(user: user)&.deletable
+  end
 end

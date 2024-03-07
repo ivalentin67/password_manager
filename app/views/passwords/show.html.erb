@@ -10,7 +10,7 @@
 
       </h1>
 
-  <%= link_to "Edit", edit_password_path %>
+  <%= link_to "Edit", edit_password_path(@password) if user_password.editable? %>
 </div>
 <h4> Credentials </h4>
   <h6> Username </h6>
@@ -25,13 +25,16 @@
       </div>
 
 <h4 class="py-5"> Share </h4>
-<%= link_to "Add a user", new_password_share_path(@password) %>
 
 <div class="flex flex-col gap-1 divide-y divide-gray-100">
-<% @password.user.excluding(current_user).each do |user| %>
-  <div class="flex justify-between items-center">
-    <%= user.email %>
-    <%= button_to "Remove", password_share_path(@password, user), method: :delete, data: {turbo_confirm:"Sur ?"} %>
+  <%= link_to "Add a user", new_password_share_path(@password) if @password.shareable_by?(current_user) %>
+  <% @password.user_passwords.includes(:user).each do |user_passwords| %>
+  <div class="grid grid-cols-3">
+    <div><%= user_passwords.user.email %></div>
+    <div class="test-right"><%= user_passwords.role.titleize %></div>
+    <div class="test-left">
+      <%= button_to "Remove", password_share_path(@password, user_passwords.user), method: :delete, data: {turbo_confirm:"Sur ?"} if user_password.shareable? %>
+    </div>
   </div>
 <% end %>
 </div>

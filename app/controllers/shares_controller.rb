@@ -1,6 +1,7 @@
 class SharesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_password
+  before_action :require_shareable_permissions
 
   def new
     @users = User.all.excluding(@password.user)
@@ -30,5 +31,9 @@ class SharesController < ApplicationController
 
   def user_password_params
     params.require(:user_password).permit(:user_id, :owner, :role)
+  end
+
+  def require_shareable_permissions
+    redirect_to @password unless user_password.shareable?
   end
 end
